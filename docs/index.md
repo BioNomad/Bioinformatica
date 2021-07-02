@@ -7,6 +7,10 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
     <img src="https://github.com/BioNomad/Bioinformatica/blob/main/images/info_graphic.PNG">
 </p>
 
+<p align="center">
+    <img src="https://bionomad.github.io/Bioinformatica/blob/main/images/info_graphic.PNG">
+</p>
+
 ## Topics
 
 #### [T-Test/Distributions][1]
