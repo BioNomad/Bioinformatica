@@ -15,3 +15,7 @@ https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_di
 ### Linear Models
 
 https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md
+
+### Error of the Mean/ Central Limit Theorem/ Confidence Intervals
+
+https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/error_clt_ci/error_clt_ci.md
