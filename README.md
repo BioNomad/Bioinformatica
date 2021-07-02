@@ -5,3 +5,7 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 <p align="center">
     <img src="https://github.com/BioNomad/Bioinforpedia/blob/main/images/info_graphic.PNG" />
 </p>
+
+## How Do I See Your Pages BioNomad?
+
+Glad you asked! So the *ultimate* goal is to turn all the github documents into a GitHub Page. But I'd like to have all the topic notes ready before then. In the meantime, you can view the topic notes I've created by going into "pages_you_can_read", then into one of the folders and click on one of the ".md" files. These are the prepared topic notes. Happy reading!
