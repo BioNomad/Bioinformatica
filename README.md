@@ -8,6 +8,10 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 ## Topics
 
+### T-Test/Distributions
+
+https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md
+
 ### Linear Models
 
 https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md
