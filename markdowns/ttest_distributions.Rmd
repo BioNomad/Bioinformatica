@@ -1,0 +1,98 @@
+---
+title: "T-test/Distributions"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'svg')
+options(device = function(file, width, height) {
+  svg(tempfile(), width = width, height = height)
+})
+```
+
+The student's t-test is a popular statistical hypothesis test where as long as the test statistic follows a t-distribution, a test statistic is generated under the null hypothesis ([Wikipedia][1]). Now there is a **LOT** to unpack there, but the gist of this test is that it tells you if there is a significant difference between two groups ([Statistics How To][2]). But let's start exploring the terminology a little more. A test statistic is essentially a numeric summary of a data set in hypothesis testing ([Wikipedia][3]). This number, based on a sampling distribution, is used to obtain the infamous *p-value*. But before we move on to p-values, let's stop to consider distributions. So in statistics, when we talk about distributions, we are probably talking about a probability distribution. A probability distribution is a mathematical function that gives you the probabilities that something will occur ([Wikipedia][4]). For now let's talk about the normal, poisson, and binomial distributions. And let's start with graphs!
+
+```{r dist,warning=FALSE,message=FALSE}
+library(ggplot2)
+library(gridExtra)
+
+#generate histograms of different sample sizes and distributions
+MakeHistogram <- function(type,sample.size,color,type.dis){
+  data <- data.frame(value=rnorm(sample.size))
+  p <- ggplot(data, aes(x=value)) + 
+    geom_histogram(fill=color)+
+    ggtitle(paste(as.character(type.dis),": ",as.character(sample.size)))
+  return(p)
+}
+
+grid.arrange(
+  MakeHistogram(rnorm,3,"thistle","Normal"),
+  MakeHistogram(rnorm,25,"thistle","Normal"),
+  MakeHistogram(rnorm,100,"thistle","Normal"),
+  MakeHistogram(rpois,3,"darkslategray1","Poisson"),
+  MakeHistogram(rpois,25,"darkslategray1","Poisson"),
+  MakeHistogram(rpois,100,"darkslategray1","Poisson"),
+  MakeHistogram(rbinom,3,"lightgoldenrod1","Binomial"),
+  MakeHistogram(rbinom,25,"lightgoldenrod1","Binomial"),
+  MakeHistogram(rbinom,100,"lightgoldenrod1","Binomial"),
+  ncol=3
+)
+```
+
+So what are these? Let's start with normal and poisson distributions. Normal distributions are based on continuous values, while poisson distributions are based on discrete values ([Wikipedia][4]). Binomial distributions are based on positive outcomes (so a yes event) in a given number of Bernoulli trials (yes/no events) ([Wikipedia][4]). And as you can see from the plots above, as sample size increases the more they approximate a bell curve. 
+
+Now that we have a little background on distributions let's go back to the t-test. So what how do we get the t-test statistic? 
+
+![t_statistic](images/t_statistic.PNG)
+
+Where t is the test statistic, X is the sample mean, u is the population mean, o is the standard deviation of the population, and n is the number of observations ([Wikipedia][1]). Now it should be mentioned that this test assumes the two groups are **normally distributed**. However it has been noted that large sample sizes can mitigate the damage caused by a group not being normally distributed ([Wikipedia][1]). You've also probably heard of a t-test being paired or unpaired. So in the context of a medical experiment, paired would mean the same subjects are used in the two groups. Unpaired would mean that the two groups have different identically and independently distributed subjects. While the paired test has it's advantage in reducing inter-patient variation it comes at the price of degrees of freedom (d.f.) (or number of values that can vary independently) ([Wikipedia][5]). And by using the same patients you cut the paired test d.f. from **n-1** to **(n/2)-1**. By reducing the d.f. you are essentially undercutting how precise the estimate is.
+
+It is also worth talking about Welch's t-test, which can handle two samples having different sample sizes and different variances ([Wikipedia][1]). Which is really useful in biology as I'll demonstrate with TCGA-LGG data:
+
+```{r ttest,warning=FALSE,message=FALSE}
+load("./lgg.rda")
+
+#So let's try to see if the number of primary tumor samples matches the
+#number of recurrent tumor samples
+table(lgg$PatientData$shortLetterCode)
+
+#Gasp, it does not. So if we were trying to determine if the expression
+#of IDH1 in LGG patients was different from those in normal patients
+#using Welch's t-test would be a good call
+primary <- as.numeric(
+  lgg$ExpressionData[grepl("IDH1",rownames(lgg$ExpressionData)),lgg$PatientData$shortLetterCode=="TP"]
+)
+
+recurrent <- as.numeric(
+  lgg$ExpressionData[grepl("IDH1",rownames(lgg$ExpressionData)),lgg$PatientData$shortLetterCode=="TR"]
+)
+
+t.test(primary,recurrent)
+
+```
+
+Here we can see that the t-statistic, t, is rather small at 0.15. The p-value is also pretty telling. At around 0.9, the p-value is saying the probability of the null hypothesis (that any difference in groups is caused by chance) is roughly 90%. Small p-values would be indicative that any observed difference between groups is unlikely to be caused by chance. So if the p-value was say 0.001, the difference you are observing would happen 0.1% of the time by chance and is reasonably rare enough to say that these two groups do indeed come from different underlying distributions.
+
+## References
+
+1. https://en.wikipedia.org/wiki/Student%27s_t-test#Independent_two-sample_t-test
+
+2. https://www.statisticshowto.com/probability-and-statistics/t-test/
+
+3. https://en.wikipedia.org/wiki/Test_statistic
+
+4. https://en.wikipedia.org/wiki/Probability_distribution
+
+5. https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics)
+
+[1]: https://en.wikipedia.org/wiki/Student%27s_t-test#Independent_two-sample_t-test
+
+[2]: https://www.statisticshowto.com/probability-and-statistics/t-test/
+
+[3]: https://en.wikipedia.org/wiki/Test_statistic
+
+[4]: https://en.wikipedia.org/wiki/Probability_distribution
+
+[5]: https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics)
+
+[t_statistic]:images/t_statistic.PNG
