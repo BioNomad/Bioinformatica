@@ -20,5 +20,5 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 [3]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/error_clt_ci/error_clt_ci.md
 
-[logo]: https://github.com/BioNomad/Bioinformatica/blob/main/images/info_graphic.PNG
+![logo]: https://github.com/BioNomad/Bioinformatica/blob/main/images/info_graphic.PNG
 
