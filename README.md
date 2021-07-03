@@ -17,6 +17,8 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 #### [ANOVA][4]
 
+#### [Contingency Tables/Fisher Test/Chi-Square Test][5]
+
 [1]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md
 
 [2]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md
@@ -24,5 +26,7 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 [3]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/error_clt_ci/error_clt_ci.md
 
 [4]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/anova/anova.md
+
+[5]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ct_ft_ct/ct_ft_ct.md
 
 
