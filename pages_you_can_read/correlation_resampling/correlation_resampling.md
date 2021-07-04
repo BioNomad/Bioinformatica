@@ -173,7 +173,7 @@ boot.ci
 Yay\! We just used bootstrapping\! Now what does all this mean? Well to
 run a bootstrap resampling on our data we need to define the statistic
 we are examining, that’s where `cor.func()` comes in. We set i as rows
-because are variables are stored in columns. So if we are going to
+because our variables are stored in columns. So if we are going to
 replace a few of our values, we are replacing rows. The results we get
 from 1000 bootstrap resamplings delivers the original correlation, the
 bias, and the standard error. The confidence interval of this boot strap
