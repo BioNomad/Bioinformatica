@@ -4,7 +4,7 @@ Multiple Comparisons/Prediction
 So far we’ve really only been performing one significance test at a
 time. But what if you want to perform many significance tests? Let’s say
 we want to see which gene’s expression was significantly different
-between male and female Low grade glioma patients. That is a **LOT** of
+between male and female Low grade glioma patients. That are a **LOT** of
 genes, nearly 20,000 of them\! But let’s do it\!
 
 ``` r
