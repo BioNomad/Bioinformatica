@@ -21,6 +21,8 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 #### [Correlation/Resampling][6]
 
+#### [Multiple Comparisons/Prediction][7]
+
 [1]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md
 
 [2]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md
@@ -33,3 +35,4 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 [6]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/correlation_resampling/correlation_resampling.md
 
+[7]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/mc_pred/mc_pred.md
