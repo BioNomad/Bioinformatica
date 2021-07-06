@@ -133,7 +133,7 @@ differences in means\!
 ## Assumption/Limitations
 
 Now we do need to consider the drawbacks here. Like the One-Way ANOVA,
-it is assumed that
+there are the following assumptions
 ([Wikipedia](https://en.wikipedia.org/wiki/Two-way_analysis_of_variance)):
 
   - independence of the observations
