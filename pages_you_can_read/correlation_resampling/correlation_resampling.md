@@ -108,7 +108,7 @@ ggplot(df, aes(x=correlation)) +
 
 ![](correlation_resampling_files/figure-gfm/perm-1.svg)<!-- -->
 
-So as we can, see our correlation is unlikely to be observed by chance,
+So as we can see, our correlation coefficient is unlikely to be observed by chance,
 as the p-value in the `cor.test()` function suggested\!
 
 ## Bootstrapping
