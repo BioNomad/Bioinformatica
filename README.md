@@ -27,7 +27,7 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 #### [Random Effects/General Linear Models/Survival Analysis][9]
 
-####[PCA][10]
+#### [PCA][10]
 
 [1]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md
 
