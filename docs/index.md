@@ -25,6 +25,8 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 #### [Random Effects/General Linear Models/Survival Analysis][9]
 
+#### [PCA][10]
+
 [1]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md
 
 [2]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md
@@ -43,5 +45,6 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 [9]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/re_glm_sur/re_glm_sur.md
 
+[10]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/pca/pca.md
 [logo]:images/info_graphic.PNG
 
