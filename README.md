@@ -31,6 +31,8 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 #### [Clustering][11]
 
+#### [Normalization][12]
+
 [1]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md
 
 [2]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md
@@ -52,3 +54,5 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 [10]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/pca/pca.md
 
 [11]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/clustering/clustering.md
+
+[12]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/normalization/normalization.md
