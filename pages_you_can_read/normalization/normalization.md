@@ -65,7 +65,7 @@ methods to explore. While we can compare these methods by boxplots, it
 is also useful to plot the standard deviation against the rank of the
 mean. The `vsn` library has a great function, `meanSDPlot()` to
 accomplish just that. In these plots we are essentially looking for the
-“flattest” plot, indicating a a more successful variance
+“flattest” plot, indicating a more successful variance
 stabilization.
 
 ``` r
