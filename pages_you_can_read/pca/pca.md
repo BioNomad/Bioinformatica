@@ -66,7 +66,9 @@ fviz_pca_var(res, col.var = "cos2",
              )
 ```
 
-![](pca_files/figure-gfm/pca1-1.svg)<!-- --> The above plot is a
+![](pca_files/figure-gfm/pca1-1.svg)<!-- --> 
+
+The above plot is a
 correlation plot. Variables that are positively correlated are close
 together and negatively correlated variables will be on opposite sides
 of the plot
