@@ -81,7 +81,9 @@ principal component?
 corrplot(variables$cos2, is.corr=FALSE)
 ```
 
-![](pca_files/figure-gfm/pca2-1.svg)<!-- --> The above table shows which
+![](pca_files/figure-gfm/pca2-1.svg)<!-- --> 
+
+The above table shows which
 variable is important along which principal component as indicated by
 size and color of the circle. We can also plot the individual data
 points, in this case the patients.
