@@ -153,7 +153,7 @@ test_roc <- roc(test$idh1_mutant ~ test_prob, plot = TRUE, print.auc = TRUE)
 So we tested our model and got similar stats to our training model\! We
 go further here and plot specificity against sensitivity. This is a
 special plot that allows us to calculate the area under the curve (AUC)
-or our **Accuracy** of our model. We look for a value above 0.5 as we
+or the **Accuracy** of our model. We look for a value above 0.5 as we
 would like our model to be be accurate more than 50% of the time. If it
 isn’t, the model is essentially worse than randomly choosing a class.
 
