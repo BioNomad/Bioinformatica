@@ -47,6 +47,8 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 #### [Supervised Learning - Model Selection Part 2][19]
 
+#### [Supervised Learning - Random Forests/Decision Trees][20]
+
 [1]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md
 
 [2]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md
@@ -84,3 +86,5 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 [18]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_ms_1/supervised_ms_1.md
 
 [19]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_ms_2/supervised_ms_2.md
+
+[20]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_rf/supervised_rf.md
