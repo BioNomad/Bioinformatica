@@ -1,0 +1,218 @@
+---
+title: "Supervised Learning - Random Forests/Decision Trees"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'svg')
+options(device = function(file, width, height) {
+  svg(tempfile(), width = width, height =height)
+})
+```
+
+Another wildly popular machine learning algorithm is the random forest algorithm. But before we dive into random forests we are going to need a little background on something called decision trees. But first let's do our set up!
+
+```{r begin, warning=FALSE,message=FALSE}
+load("lgg.rda")
+library(limma)
+library(glmnet)
+#we are going to do something different here and use our gene expression data
+#let's first filter, normalize and grab only the top 50 genes with the
+#highest variance
+filt.exp <- lgg$ExpressionData[rowMeans(lgg$ExpressionData)>10,]
+log_trans <- log2(filt.exp+1)
+norm_data <- normalizeQuantiles(log_trans)
+vars <- rank(-apply(norm_data,1,var))<=50
+#here we make sure our predictor variables are the columns
+df <- as.data.frame(t(norm_data[vars,]))
+df["idh1"] <- as.numeric(norm_data[grepl("IDH1",rownames(norm_data)),])
+df["idh1_mutant"] <-as.factor(as.numeric(lgg$PatientData$paper_IDH.status))
+df <- na.omit(df)
+#split data into training and test data
+set.seed(42)
+train_ind <- sample(1:nrow(df), 0.8*nrow(df))
+train <- df[train_ind, ]
+test  <- df[-train_ind, ]
+#now let's use lasso regression to pick our features:
+#run our lasso regression on our data
+lasso <- cv.glmnet(as.matrix(train[,1:50]), train[,51],nfolds = 10,
+                   alpha=1, standardize=TRUE)
+coefs <- round(as.matrix(coef(lasso,lasso$lambda.min)),2)
+#grab non-zero coefficients
+features <- coefs[coefs[, 1]!= 0,]
+#grab top ten
+sel <- names(features[order(abs(features),decreasing = T)][2:length(features)][1:10])
+#filter our training and test sets
+train <- train[c(sel,"idh1","idh1_mutant")]
+test <- test[c(sel,"idh1","idh1_mutant")]
+```
+
+## Decision Trees
+
+So what are decision trees? Decision trees attempt to split your data set like so ([datacamp][1]):
+
+![decision_tree](images/decision_tree.PNG)
+
+Here we see something that looks a lot like a tree, each **decision node** splits your data into different subsets and end in **terminal nodes** that don't split further. If you were to remove some of these subnodes you would be **pruning** the decision tree. These trees can be used used to predict quantitative and qualitative variables.
+
+#### Regression Trees
+
+Let's first touch on regression trees, a technique used to predict some quantitative variable. Trees are split by trying to minimize the residual sum of squares (**RSS**) ([datacamp][1]):
+
+![rss_rs](images/rss_rs.PNG)
+
+where **M** is the number of partitions, **i<sub>e</sub>R<sub>M</sub>** are the observations in a partition, and **y<sub>R<sub>m</sub></sub>** is the average response for a particular partition. Now how do we prevent overfitting we need to engage in pruning our tree? To do that we need some penalty to prevent an overly complex tree ([UC Business Analytics R Programming Guide][2]):
+
+![rs_penalty](images/rs_penalty.PNG)
+
+where **alpha** is your tuning parameter and **T** is the number of terminal nodes in your tree. And as we saw in the topic note on model selection, penalizing using the absolute value is very similar to **LASSO regression**/**L1 Regularization**. Now let's get to some R!
+
+```{r dec_tree,warning=FALSE,message=FALSE}
+library(rpart)     
+library(rpart.plot)
+#let's only focus on quantitative data for now
+rs_train <- train[,1:11]
+rs_model <- rpart(
+  formula = idh1 ~.,
+  data    = rs_train,
+  method  = "anova"
+  )
+rpart.plot(rs_model)
+```
+
+So here we get a look at how our data was ultimately split based on the minimization of RSS values. We can see that our tree ended up with 16 terminal nodes. And while we could keep this model as is, it's a good idea to check the error versus our penalty value:
+
+```{r dec_tree_plot,warning=FALSE,message=FALSE}
+plotcp(rs_model)
+```
+
+Now here we have a new plot. For each tree size, we have values for the error and it's corresponding cost penalty. The dashed line crosses a tree size that is within 1 standard deviation of the minimum of our cross validation error. This tree size is recommended to minimize error but also avoid an overly complex tree. So here we could get away with a tree of about 5 nodes.
+
+#### Classification Trees
+
+So we just predicted a quantitative variable, what about a qualitative one? Well we included IDH1 mutant status for that very purpose. So in a classification tree, you cannot split by the residual sum of squares. Instead you need to split by one of the following ([datacamp][1], [QuantDare][3]):
+
+![tree_error](images/tree_error.PNG)
+
+Where **E** is the classification error **pi<sub>mc</sub>** is the fraction of the data in region **R<sub>m</sub>** that belongs to class **c**.
+
+![tree_gini](images/tree_gini.PNG)
+
+Where **p<sub>j</sub>** is the probability of class **j**.
+
+![tree_entropy](images/tree_entropy.PNG)
+
+Where again, **p<sub>j</sub>** is the probability of class **j**. Given that the Gini index is a little more computationally feasible it is a popular choice when splitting classification trees. So let's see it in R!
+
+```{r class_tree,warning=FALSE,message=FALSE}
+library(tree)
+#grab only our binary classification variable
+cs_df <- train[,c(1:10,12)]
+#remove special characters from the dataframe names so the tree function
+#doesn't freak out
+names(cs_df) <- gsub("\\|.*","",names(cs_df))
+#make our tree!
+set.seed(42)
+idh1_mut_tree = tree(idh1_mutant ~ ., data = cs_df)
+#now let's cross validate it and plot our misclassification rates
+cv_idh1_mut_tree = cv.tree(idh1_mut_tree,FUN = prune.misclass)
+plot(cv_idh1_mut_tree)
+#alright it looks like we could get away with a tree size of 5 to minimize
+#our misclassification rate, so let's prune our tree!
+idh1_mut_pruned = prune.misclass(idh1_mut_tree, best = 5)
+plot(idh1_mut_pruned)
+text(idh1_mut_pruned,cex=0.7)
+```
+
+Here we constructed our tree with the ```tree()``` function and then cross validated our tree with the ```cv.tree()``` function to determine the smallest tree we could get away with, while also minimizing the misclassification error rate. We then found out that number was around 5 and pruned our tree to grab the best 5 terminal nodes.
+
+#### Bootstrap Aggregation (A.K.A. Bagging)
+
+Now decision trees can suffer from delivering wildly different predictions. So how do we fix that? Well from the title of this section you probably guessed it has something to do with **Bagging**. Bagging can be summarized by the following ([UC Business Analytics R Programming Guide][2]):
+
+![bagging](images/bagging.PNG)
+
+So as we can see from the image above you randomly sample your training data with replacement (bootstrapping!), models are created off these samples, then the prediction is the average of all these models. Let's try bagging in R!
+
+```{r bag, warning=FALSE,message=FALSE}
+library(caret)
+ctrl <- trainControl(method = "cv",  number = 10) 
+#let's make a cross validated bagged tree model!
+bag_tree <- train(
+  idh1_mutant~.,
+  data = cs_df,
+  method = "treebag",
+  trControl = ctrl,
+  importance = TRUE
+  )
+#we can even plot variable importance!
+plot(varImp(bag_tree), 10) 
+
+```
+
+Here we constructed a cross validated tree based model and plotted the variable importance as well.
+
+## Random Forests
+
+Without further ado, we finally get to Random Forests! Random forests are pretty similar to decision tree bagging. Both methods use a number of trees to reduce variance in prediction. However, there is a pretty big problem with plain old bagging. Those trees that you bootstrap are bound to be correlated in some way shape or form given they are built off similar data. Random Forests on the other hand go an extra step to make sure these trees are decorrelated. The method accomplishes this by **split-variable randomization**. Scary word right? All this means is that split variable is limited to a random subset of **m** out of the **p** variables you are making the tree with ([UC Business Analytics R Programming Guide][4]). Usually **m = p/3**, so a third of your **p** variables. This extra randomization aids enormously in decorrelating trees and has made Random forests a juggernaut in machine learning. 
+
+When talking about random forests it's also worth mentioning it's error metric, **out-of-bag error**. When you bootstrap samples for your Random forest model you are grabbing samples, one might say out of a bag. The samples left in the bag essentially become your test set and the samples you took out are your training set. We can then use the samples you took out of the bag to predict what is left in the bag. This gives you the out-of-bag error, which saves you the trouble of putting together a validation/test set yourself! Enough talk though, let's get to R! ([UC Business Analytics R Programming Guide][4])
+
+```{r rf, warning=FALSE,message=FALSE}
+library(randomForest)
+set.seed(42)
+#let's make a model!
+rf_model <- randomForest(
+  formula = idh1_mutant~.,
+  data = cs_df
+)
+#model summary
+rf_model
+#plot our tree size v. error and get the where it starts leveling off
+plot(rf_model)
+which.min(rf_model$err.rate[1:200])
+```
+
+So we've built a Random Forest Model! We can see from the model summary that we get: the formula, type of decision tree, number of trees, variables tried at each split, the out-of-bag error, and the confusion matrix. A quick glance reveals that a decent error rate of 4.39%. However, like all models, this one can be optimized. So we plot tree size versus error to reveal that somewhere between 50 and 200 the error levels off. We get the minimum of the error rate between that range to find that the minimum number of trees needed to deliver a sufficient model. Now let's try more optimization!
+
+```{r rf_opt,message=FALSE,warning=FALSE}
+#let's optimize the number of variables we try at each split!
+mtry_tune <- tuneRF(
+  x          = cs_df[,1:10],
+  y          = cs_df[,11],
+  ntreeTry   = 500,
+  mtryStart  = 5,
+  stepFactor = 1.5,
+  improve    = 0.01,
+  trace      = FALSE
+)
+#make a new model with our optimized metrics
+set.seed(42)
+new_rf <- randomForest(
+    formula = idh1_mutant~.,
+    data = cs_df,
+    mtry=7,
+    ntree=145
+)
+new_rf
+```
+
+Here we use the ```tuneRF()``` function to optimize the number of variables we try at each split. From our plot it appears as though 7 is that magic number. We then feed in our updated metrics into a new optimized Random forest model!
+
+## References
+
+1. https://www.datacamp.com/community/tutorials/decision-trees-R 
+
+2. https://uc-r.github.io/regression_trees
+
+3. https://quantdare.com/decision-trees-gini-vs-entropy/
+
+4. https://uc-r.github.io/random_forests
+
+[1]: https://www.datacamp.com/community/tutorials/decision-trees-R
+
+[2]: https://uc-r.github.io/regression_trees
+
+[3]: https://quantdare.com/decision-trees-gini-vs-entropy/
+
+[4]: https://uc-r.github.io/random_forests
