@@ -7,7 +7,7 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
     <img src="https://github.com/BioNomad/Bioinformatica/blob/main/images/info_graphic.PNG" width=, height=>
 </p>
 
-## Topics
+## Biostatistics 
 
 #### [T-Test/Distributions][1]
 
@@ -32,6 +32,8 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 #### [Clustering][11]
 
 #### [Normalization][12]
+
+## Machine Learning
 
 #### [Supervised Learning - Linear Regression][13]
 
