@@ -1,2 +1,11 @@
-theme: jekyll-theme-minimal
-google_site_verification: mdGMtWoEKGGK0TGevR0jQm-X4f9rVK6wmYAT8bG8Qeg
+title: [Bioinformatica]
+description: [Collection of Bioinformatics Tutorials]
+
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - README.md
+  - pages_you_can_read/
