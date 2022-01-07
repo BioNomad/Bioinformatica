@@ -1,2 +1,5 @@
 theme: jekyll-theme-cayman
 google_analytics: G-P5XY5P2E18
+include:
+  - README.md
+  - pages_you_can_read/ttest_distributions/ttest_distributions.md
