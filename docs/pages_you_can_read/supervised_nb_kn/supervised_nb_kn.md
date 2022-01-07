@@ -1,0 +1,250 @@
+Supervised Learning - Naive Bayes/K-Nearest Neighbors
+================
+
+## Naive Bayes
+
+Here we talk a little about the Naive Bayes and K-Nearest Neighbors
+models. So let’s start with Naive Bayes. If we are going to go into the
+Naive Bayes model it would be helpful to review Bayes theorem
+([Wikipedia](https://en.wikipedia.org/wiki/Bayes%27_theorem)):
+
+![bayes](images/bayes.PNG)
+
+So what do these mean? Well let’s break it down
+([Wikipedia](https://en.wikipedia.org/wiki/Bayes%27_theorem)):
+
+  - **P(A|B)** is the probability of A happening given that B happens.
+    Because the probability is *given* something else we call it a
+    conditional probability. **P(A|B)** is also called the **posterior
+    probability** - basically probability calculated after the evidence
+    is taken into account
+    ([Wikipedia](https://en.wikipedia.org/wiki/Posterior_probability)).
+
+  - **P(B|A)** is the probability of B happening given A happens. This
+    is also a conditional probability.
+
+  - **P(A)** is the probability of A happening and **P(B)** is the
+    probability of B happening. These probabilities are **prior
+    probabilities** or probabilities we have before new evidence is
+    collected
+    ([Wikipedia](https://en.wikipedia.org/wiki/Prior_probability)).
+
+So as we can see, the question we are asking is “What is the probability
+of an event happening (**B**) given factors (**A**) that are related to
+the event?”. We can take this relationship and apply it to the problem
+of classification\! But there is a problem. If we have **x** number of
+classes and **y** predictors, then we need to calculate
+**x<sup>y</sup>** probabilities. That quickly becomes a LOT of
+probabilities and is why bayesian analyses can be computationally
+expensive. We can get around this with the Naive Bayes Classifier. The
+Naive Bayes algorithm assumes that:
+
+1.  the predictors are independent
+
+2.  the predictors have the same effect on the outcome
+
+While this seems like a stretch for most situations, it allows us to
+collapse the original Bayes Equation to ([towards data
+science](https://towardsdatascience.com/naive-bayes-classifier-81d512f50a7c)):
+
+![naive\_bayes](images/naive_bayes.PNG)
+
+Now we can get away with calculating **x** \* **y** probabilities - much
+easier\! So how do we do this in R?
+
+``` r
+library(e1071)
+library(caret)
+load("./lgg.rda")
+#grab age, IDH1 mutant status, mutation count, and purity
+age <- lgg$PatientData$age_at_index
+idh1_mutant <- as.character(lgg$PatientData$paper_IDH.status)
+mutation_count <- as.numeric(lgg$PatientData$paper_Mutation.Count)
+purity <- as.numeric(lgg$PatientData$paper_ABSOLUTE.purity)
+df <- data.frame(
+  idh1_mutant,
+  age,
+  mutation_count,
+  purity
+)
+df <- na.omit(df)
+#now let's take a look at our data:
+caret::featurePlot(x = df[,2:4], 
+                   y = as.factor(df$idh1_mutant),
+                   plot = "box",
+                   scales = list(y = list(relation = "free"),
+                                 x = list(rot = 90)),
+                   layout = c(3, 1))
+```
+
+![](supervised_nb_kn_files/figure-gfm/naive-1.svg)<!-- -->
+
+``` r
+#oof let's normalize, we will just take the log2 here!
+df <- data.frame(
+  idh1_mutant=df$idh1_mutant,
+  log2(df[,2:4]+1)
+)
+caret::featurePlot(x = df[,2:4], 
+                   y = as.factor(df$idh1_mutant),
+                   plot = "box",
+                   scales = list(y = list(relation = "free"),
+                                 x = list(rot = 90)),
+                   layout = c(3, 1))
+```
+
+![](supervised_nb_kn_files/figure-gfm/naive-2.svg)<!-- -->
+
+Here we can see that our data is on drastically different scales using
+the `featurePlot()` function of the `caret` library. So before going
+forward we will normalize our data. And as can be seen in the last
+feature plot, it is much easier to visually inspect differences in
+distributions between WT and IDH1 mutants. Now let’s build the model\!
+
+``` r
+#split data into training and test data
+set.seed(42)
+train_ind <- sample(1:nrow(df), 0.8*nrow(df))
+train <- df[train_ind, ]
+test  <- df[-train_ind, ]
+#make the model
+model <- naiveBayes(idh1_mutant~.,data = train)
+model
+```
+
+    ## 
+    ## Naive Bayes Classifier for Discrete Predictors
+    ## 
+    ## Call:
+    ## naiveBayes.default(x = X, y = Y, laplace = laplace)
+    ## 
+    ## A-priori probabilities:
+    ## Y
+    ##    Mutant        WT 
+    ## 0.8217523 0.1782477 
+    ## 
+    ## Conditional probabilities:
+    ##         age
+    ## Y            [,1]      [,2]
+    ##   Mutant 5.327702 0.4299327
+    ##   WT     5.751803 0.4026197
+    ## 
+    ##         mutation_count
+    ## Y            [,1]      [,2]
+    ##   Mutant 4.589082 0.6933727
+    ##   WT     5.471003 1.4724881
+    ## 
+    ##         purity
+    ## Y             [,1]      [,2]
+    ##   Mutant 0.7850136 0.1671352
+    ##   WT     0.7610259 0.1628769
+
+So there is a lot going on here, but let’s start with the `Call:`
+portion of the output. We see our our model, but also an option called
+`laplace = laplace`. What is laplace? Well, if you recall our
+classification probability depends on the product of multiple
+probabilities, and if one of the probabilities happens to be 0, then the
+whole result would be 0. To get around this Laplace smoothing adds a
+small value to each term to avoid getting 0
+([Wikipedia](https://en.wikipedia.org/wiki/Additive_smoothing)). The
+`A-priori probabilities:` section will contain your overall prior
+probabilities and the `Conditional probabilities:` section will have the
+mean of that predictor and the standard deviation. Now let’s examine the
+error/confusion matrix:
+
+``` r
+#get the classification error:
+ClassError = function(actual, predicted) {
+  mean(actual != predicted)
+}
+ClassError(train$idh1_mutant,predict(model,train))
+```
+
+    ## [1] 0.1359517
+
+``` r
+ClassError(test$idh1_mutant,predict(model,newdata = test))
+```
+
+    ## [1] 0.1445783
+
+``` r
+#now let's grab the confusion matrix:
+nb_cm <- confusionMatrix(table(
+  predicted=predict(model,newdata=test),
+  actual=test$idh1_mutant
+  ))
+c(nb_cm$overall["Accuracy"],
+nb_cm$byClass["Sensitivity"],
+nb_cm$byClass["Specificity"])
+```
+
+    ##    Accuracy Sensitivity Specificity 
+    ##   0.8554217   0.9692308   0.4444444
+
+So here we see that our model has roughly equal classification error
+between our training and test data. This is a good sign that we are not
+overfitting our data. We can also see that the model is relatively
+accurate, with an accuracy \> 80%, and sensitive with a sensitivity
+\>90%. However, like our logistic regression classification, our
+specificity is rather poor at \~40%.
+
+## K-Nearest Neighbors
+
+So far we have been talking about parametric classification methods,
+logistic regression and naive bayes models. But there is an option for a
+non-parametric classification model, k-nearest neighbors. It is a
+remarkably simple classification method, as it classifies by assessing
+the Euclidean distance between data points ([towards data
+science](https://towardsdatascience.com/k-nearest-neighbors-algorithm-with-examples-in-r-simply-explained-knn-1f2c88da405c)).
+Then you chose a “k” value, and the algorithm will classify based on the
+k nearest neighbors of a particular data point. Let’s try it in R\!
+
+``` r
+library(class)
+#make our predictions
+knn_pred <- knn(train[,2:4],test[,2:4],cl=as.factor(train$idh1_mutant),k=5)
+#make the confusion matrix
+knn_cm <- confusionMatrix(table(
+  actual=test$idh1_mutant,
+  predicted=knn_pred
+))
+#what are our stats?
+ClassError(actual = test$idh1_mutant,
+           predicted = knn_pred)
+```
+
+    ## [1] 0.1927711
+
+``` r
+c(knn_cm$overall["Accuracy"],
+knn_cm$byClass["Sensitivity"],
+knn_cm$byClass["Specificity"])
+```
+
+    ##    Accuracy Sensitivity Specificity 
+    ##   0.8072289   0.8450704   0.5833333
+
+For an algorithm without any parameters it performs surprisingly well.
+While the accuracy/sensitivity may have taken a dive in comparison to
+our naive bayes model, the specificity of the model did increase\! Our
+classification error also did not change drastically either. Before
+ending this topic note, it is important to stress the need for
+normalization here. We saw in the beginning of our topic note that our
+original variables were on drastically different scales. If we had not
+normalized here, k-nearest neighbors classification would have performed
+very poorly as it is dependent on the distance between data points.
+
+## References
+
+1.  <https://en.wikipedia.org/wiki/Bayes%27_theorem>
+
+2.  <https://en.wikipedia.org/wiki/Posterior_probability>
+
+3.  <https://en.wikipedia.org/wiki/Prior_probability>
+
+4.  <https://towardsdatascience.com/naive-bayes-classifier-81d512f50a7c>
+
+5.  <https://en.wikipedia.org/wiki/Additive_smoothing>
+
+6.  <https://towardsdatascience.com/k-nearest-neighbors-algorithm-with-examples-in-r-simply-explained-knn-1f2c88da405c>
