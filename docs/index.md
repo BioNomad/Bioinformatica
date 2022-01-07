@@ -1,6 +1,3 @@
-<meta name="google-site-verification" content="mdGMtWoEKGGK0TGevR0jQm-X4f9rVK6wmYAT8bG8Qeg" />
-
-# Bioinformatica
 
 Welcome to the working repository for Bioinformatica! Here I will apply various bioinformatics analysis techniques to TCGA-LLG data in an effort to both cement my understanding of these topics but also provide a resource for others learning bioinformatics. Topics will include: regression, ANOVA, model building, PCA, clustering, machine learning, network analysis, etc.
 
