@@ -9,3 +9,5 @@ relative_links:
 include:
   - README.md
   - pages_you_can_read/
+
+theme: jekyll-theme-minimal
