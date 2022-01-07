@@ -1,6 +1,6 @@
 
 
-Welcome to the working repository for Bioinformatica! Here I will apply various bioinformatics analysis techniques to TCGA-LLG data in an effort to both cement my understanding of these topics but also provide a resource for others learning bioinformatics. Topics will include: regression, ANOVA, model building, PCA, clustering, machine learning, network analysis, etc. This repository is also a GitHub page as well, feel free to explore it at: https://bionomad.github.io/Bioinformatica/ . 
+Welcome to the working repository for Bioinformatica! Here I will apply various bioinformatics analysis techniques to TCGA-LLG data in an effort to both cement my understanding of these topics but also provide a resource for others learning bioinformatics. Topics will include: regression, ANOVA, model building, PCA, clustering, machine learning, network analysis, etc. This repository is also a GitHub page as well, feel free to explore it [here](https://bionomad.github.io/Bioinformatica/). 
 
 ## Biostatistics 
 
