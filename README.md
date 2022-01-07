@@ -9,84 +9,45 @@ Welcome to the working repository for Bioinformatica! Here I will apply various 
 
 ## Biostatistics 
 
-#### [T-Test/Distributions][1]
+#### [T-Test/Distributions](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md)
 
-#### [Linear Models][2]
+#### [Linear Models](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md)
 
-#### [Error of the Mean/ Central Limit Theorem/ Confidence Intervals][3]
+#### [Error of the Mean/ Central Limit Theorem/ Confidence Intervals](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/error_clt_ci/error_clt_ci.md)
 
-#### [ANOVA][4]
+#### [ANOVA](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/anova/anova.md)
 
-#### [Contingency Tables/Fisher Test/Chi-Square Test][5]
+#### [Contingency Tables/Fisher Test/Chi-Square Test](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ct_ft_ct/ct_ft_ct.md)
 
-#### [Correlation/Resampling][6]
+#### [Correlation/Resampling](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/correlation_resampling/correlation_resampling.md)
 
-#### [Multiple Comparisons/Prediction][7]
+#### [Multiple Comparisons/Prediction](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/mc_pred/mc_pred.md)
 
-#### [2-Way ANOVA][8]
+#### [2-Way ANOVA](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/2_anova/2_anova.md)
 
-#### [Random Effects/General Linear Models/Survival Analysis][9]
+#### [Random Effects/General Linear Models/Survival Analysis](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/re_glm_sur/re_glm_sur.md)
 
-#### [PCA][10]
+#### [PCA](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/pca/pca.md)
 
-#### [Clustering][11]
+#### [Clustering](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/clustering/clustering.md)
 
-#### [Normalization][12]
+#### [Normalization](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/normalization/normalization.md)
 
 ## Machine Learning
 
-#### [Supervised Learning - Linear Regression][13]
+#### [Supervised Learning - Linear Regression](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_linear_reg/supervised_linear_reg.md)
 
-#### [Supervised Learning - Classification/Logistic Regression][14]
+#### [Supervised Learning - Classification/Logistic Regression](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_class_log/supervised_class_log.md)
 
-#### [Supervised Learning - Naive Bayes/K-Nearest Neighbors][15]
+#### [Supervised Learning - Naive Bayes/K-Nearest Neighbors](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_nb_kn/supervised_nb_kn.md)
 
-#### [Supervised Learning - Neural Networks][16]
+#### [Supervised Learning - Neural Networks](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_nn/supervised_nn.md)
 
-#### [Supervised Learning - Support Vector Machines][17]
+#### [Supervised Learning - Support Vector Machines](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_svm/supervised_svm.md)
 
-#### [Supervised Learning - Model Selection Part 1][18]
+#### [Supervised Learning - Model Selection Part 1](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_ms_1/supervised_ms_1.md)
 
-#### [Supervised Learning - Model Selection Part 2][19]
+#### [Supervised Learning - Model Selection Part 2](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_ms_2/supervised_ms_2.md)
 
-#### [Supervised Learning - Random Forests/Decision Trees][20]
+#### [Supervised Learning - Random Forests/Decision Trees](https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_rf/supervised_rf.md)
 
-[1]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ttest_distributions/ttest_distributions.md
-
-[2]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/models/linear_model.md
-
-[3]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/error_clt_ci/error_clt_ci.md
-
-[4]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/anova/anova.md
-
-[5]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/ct_ft_ct/ct_ft_ct.md
-
-[6]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/correlation_resampling/correlation_resampling.md
-
-[7]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/mc_pred/mc_pred.md
-
-[8]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/2_anova/2_anova.md
-
-[9]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/re_glm_sur/re_glm_sur.md
-
-[10]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/pca/pca.md
-
-[11]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/clustering/clustering.md
-
-[12]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/normalization/normalization.md
-
-[13]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_linear_reg/supervised_linear_reg.md
-
-[14]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_class_log/supervised_class_log.md
-
-[15]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_nb_kn/supervised_nb_kn.md
-
-[16]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_nn/supervised_nn.md
-
-[17]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_svm/supervised_svm.md
-
-[18]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_ms_1/supervised_ms_1.md
-
-[19]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_ms_2/supervised_ms_2.md
-
-[20]: https://github.com/BioNomad/Bioinformatica/blob/main/pages_you_can_read/supervised_rf/supervised_rf.md
