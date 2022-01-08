@@ -1,6 +1,6 @@
 
 <p align="center">
-    <img src="https://github.com/BioNomad/Bioinformatica/blob/main/images/background.jpg" width=1000, height=30>
+    <img src="https://github.com/BioNomad/Bioinformatica/blob/main/images/background.jpg" width=1000, height=15>
 </p>
 
 # Bioinformatica
