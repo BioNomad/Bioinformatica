@@ -1,14 +1,22 @@
-defaults:
-  # _docs
-  - scope:
-      path: ""
-      type: docs
-    values:
-      sidebar:
-        - title: "ANOVA"
-          url: pages_you_can_read/anova/
-          output: "web"
-        - title: "ANOVA2"
-          url: pages_you_can_read/anova/anova.md
-          output: "web"
-        
+# Sidebar navigation
+
+- label: 'Introduction'
+  link: '/'
+- label: 'Getting started'
+  link: '/getting-started'
+- label: Usage
+  items:
+    - label: 'Creating docs'
+      link: '/usage/creating-docs'
+    - label: 'Navigation'
+      link: '/usage/navigation'
+    - label: 'Shadowing'
+      link: '/usage/shadowing'
+    - label: 'Using YAML files'
+      link: '/usage/using-yaml-files'
+- label: More
+  items:
+    - label: FAQ
+      link: /faq
+    - label: 'Github'
+      link: https://github.com/jpedroschmitz/rocketdocs
