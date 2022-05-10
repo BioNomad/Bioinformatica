@@ -3,7 +3,6 @@ theme: jekyll-theme-cayman
 title: My File Name
 permalink: myfile.html
 sidebar: 
-  - title: "My Sidebar"
-    url: docs/pages_you_can_read/anova/anova.md
+  nav: docs
 product: My Product
 ---
