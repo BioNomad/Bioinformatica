@@ -3,8 +3,8 @@
 - label: 'Introduction'
   link: '/'
 - label: 'Clustering'
-  link: '/pages_you_can_read/clustering/clustering'
+  link: 'docs/pages_you_can_read/clustering/clustering'
 - label: Usage
   items:
     - label: 'anova'
-      link: '/pages_you_can_read/anova/anova'
+      link: 'docs/pages_you_can_read/anova/anova'
