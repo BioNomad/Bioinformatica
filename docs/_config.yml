@@ -6,7 +6,7 @@ defaults:
     values:
       sidebar:
         - title: "ANOVA"
-        url: pages_you_can_read/anova/
+          url: pages_you_can_read/anova/
         - title: "ANOVA2"
-        url: pages_you_can_read/anova/anova.md
+          url: pages_you_can_read/anova/anova.md
         
