@@ -1,5 +1,3 @@
-repository: tomjoht/documentation-theme-jekyll
-
 defaults:
   # _docs
   - scope:
