@@ -5,4 +5,8 @@ defaults:
       type: docs
     values:
       sidebar:
-        nav: "docs"
+        - title: "ANOVA"
+        url: pages_you_can_read/anova/
+        - title: "ANOVA2"
+        url: pages_you_can_read/anova/anova.md
+        
